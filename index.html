@@ -5,17 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>我的第一个网页</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       font-family: Arial, sans-serif;
       background: #f0f4f8;
+      color: #1f2937;
     }
 
-    main {
+    header {
+      position: sticky;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px clamp(24px, 8vw, 96px);
+      background: rgba(240, 244, 248, 0.92);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      color: #0969da;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    nav a {
+      padding: 10px 16px;
+      color: #0969da;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid #0969da;
+      border-radius: 999px;
+    }
+
+    .page {
+      width: min(720px, calc(100% - 32px));
+      margin: 56px auto;
+    }
+
+    section {
       padding: 40px;
       text-align: center;
       background: white;
@@ -23,15 +60,44 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
 
+    #contact {
+      margin-top: 24px;
+    }
+
     h1 {
       color: #0969da;
+    }
+
+    .email-link {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 12px 20px;
+      color: white;
+      background: #0969da;
+      border-radius: 8px;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>你好，GitHub！</h1>
-    <p>这是我使用 Git 管理的第一个网页。</p>
+  <header>
+    <a class="brand" href="#home">我的主页</a>
+    <nav aria-label="主导航">
+      <a href="#contact">联系我</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section id="home">
+      <h1>你好，GitHub！</h1>
+      <p>这是我使用 Git 管理的第一个网页。</p>
+    </section>
+
+    <section id="contact">
+      <h2>联系我</h2>
+      <p>如果你想交流项目、想法或合作机会，欢迎给我发邮件。</p>
+      <a class="email-link" href="mailto:hello@example.com">hello@example.com</a>
+    </section>
   </main>
 </body>
 </html>
