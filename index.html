@@ -4,34 +4,125 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>我的第一个网页</title>
+  <script>
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = savedTheme || (prefersDark ? 'dark' : 'light');
+  </script>
   <style>
+    :root {
+      color-scheme: light;
+      --page-bg: #f0f4f8;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --accent: #0969da;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --page-bg: #0d1117;
+      --card-bg: #161b22;
+      --text: #e6edf3;
+      --accent: #58a6ff;
+      --shadow: rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background: var(--page-bg);
+      transition: color 180ms ease, background 180ms ease;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px clamp(24px, 8vw, 96px);
+    }
+
+    .brand {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    #theme-toggle {
+      padding: 10px 16px;
+      color: var(--text);
+      font: inherit;
+      font-weight: 700;
+      background: var(--card-bg);
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    #theme-toggle:hover {
+      color: var(--card-bg);
+      background: var(--accent);
+    }
+
+    .page {
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: Arial, sans-serif;
-      background: #f0f4f8;
+      min-height: calc(100vh - 82px);
+      padding: 24px;
     }
 
     main {
       padding: 40px;
       text-align: center;
-      background: white;
+      background: var(--card-bg);
       border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 30px var(--shadow);
+      transition: background 180ms ease, box-shadow 180ms ease;
     }
 
     h1 {
-      color: #0969da;
+      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>你好，GitHub！</h1>
-    <p>这是我使用 Git 管理的第一个网页。</p>
-  </main>
+  <header>
+    <div class="brand">我的主页</div>
+    <nav aria-label="主题设置">
+      <button id="theme-toggle" type="button" aria-pressed="false">🌙 深色模式</button>
+    </nav>
+  </header>
+
+  <div class="page">
+    <main>
+      <h1>你好，GitHub！</h1>
+      <p>这是我使用 Git 管理的第一个网页。</p>
+    </main>
+  </div>
+
+  <script>
+    const themeToggle = document.querySelector('#theme-toggle');
+
+    function updateThemeButton() {
+      const isDark = document.documentElement.dataset.theme === 'dark';
+      themeToggle.textContent = isDark ? '☀️ 浅色模式' : '🌙 深色模式';
+      themeToggle.setAttribute('aria-pressed', String(isDark));
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = nextTheme;
+      localStorage.setItem('theme', nextTheme);
+      updateThemeButton();
+    });
+
+    updateThemeButton();
+  </script>
 </body>
 </html>
