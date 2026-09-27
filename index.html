@@ -17,6 +17,7 @@
       --text: #1f2937;
       --accent: #0969da;
       --shadow: rgba(0, 0, 0, 0.1);
+      --header-bg: rgba(240, 244, 248, 0.92);
     }
 
     :root[data-theme="dark"] {
@@ -26,10 +27,15 @@
       --text: #e6edf3;
       --accent: #58a6ff;
       --shadow: rgba(0, 0, 0, 0.45);
+      --header-bg: rgba(13, 17, 23, 0.92);
     }
 
     * {
       box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -42,42 +48,57 @@
     }
 
     header {
+      position: sticky;
+      top: 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 20px clamp(24px, 8vw, 96px);
+      background: var(--header-bg);
+      backdrop-filter: blur(12px);
+      transition: background 180ms ease;
     }
 
     .brand {
       color: var(--accent);
       font-weight: 700;
+      text-decoration: none;
     }
 
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    nav a,
     #theme-toggle {
       padding: 10px 16px;
-      color: var(--text);
+      color: var(--accent);
       font: inherit;
       font-weight: 700;
       background: var(--card-bg);
+      text-decoration: none;
       border: 1px solid var(--accent);
       border-radius: 999px;
+    }
+
+    #theme-toggle {
       cursor: pointer;
     }
 
+    nav a:hover,
     #theme-toggle:hover {
       color: var(--card-bg);
       background: var(--accent);
     }
 
     .page {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: calc(100vh - 82px);
-      padding: 24px;
+      width: min(720px, calc(100% - 32px));
+      margin: 56px auto;
     }
 
-    main {
+    section {
       padding: 40px;
       text-align: center;
       background: var(--card-bg);
@@ -86,25 +107,46 @@
       transition: background 180ms ease, box-shadow 180ms ease;
     }
 
+    #contact {
+      margin-top: 24px;
+    }
+
     h1 {
       color: var(--accent);
+    }
+
+    .email-link {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 12px 20px;
+      color: white;
+      background: var(--accent);
+      border-radius: 8px;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="brand">我的主页</div>
-    <nav aria-label="主题设置">
+    <a class="brand" href="#home">我的主页</a>
+    <nav aria-label="主导航">
+      <a href="#contact">联系我</a>
       <button id="theme-toggle" type="button" aria-pressed="false">🌙 深色模式</button>
     </nav>
   </header>
 
-  <div class="page">
-    <main>
+  <main class="page">
+    <section id="home">
       <h1>你好，GitHub！</h1>
       <p>这是我使用 Git 管理的第一个网页。</p>
-    </main>
-  </div>
+    </section>
+
+    <section id="contact">
+      <h2>联系我</h2>
+      <p>如果你想交流项目、想法或合作机会，欢迎给我发邮件。</p>
+      <a class="email-link" href="mailto:hello@example.com">hello@example.com</a>
+    </section>
+  </main>
 
   <script>
     const themeToggle = document.querySelector('#theme-toggle');
